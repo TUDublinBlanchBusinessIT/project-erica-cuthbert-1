@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Slider from '@react-native-community/slider';
-import { Picker } from '@react-native-picker/picker'; // if not installed: npm i @react-native-picker/picker
+import { Picker } from '@react-native-picker/picker';
 
 const campuses = [
   { label: 'Pick a campus', value: '' },
@@ -21,10 +21,10 @@ const campuses = [
 
 const App = () => {
   const [campus, setCampus] = useState('');
-  const [podType, setPodType] = useState('single'); // 'single' or 'group'
+  const [podType, setPodType] = useState('single'); 
   const [dateTime, setDateTime] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
-  const [duration, setDuration] = useState(1); // hours
+  const [duration, setDuration] = useState(1); 
 
   const onChangeDateTime = (event, selectedDate) => {
     setShowPicker(false);
@@ -227,3 +227,5 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+/* Note to self- laptop cannot download npx or npv */
