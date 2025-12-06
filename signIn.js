@@ -14,13 +14,9 @@ export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignIn = () => {
-    console.log('Email:', email);
-    console.log('Password:', password);
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
-    // later you'll replace this with actual sign-in logic
-    // right now it can just navigate to the next screen:
-    // navigation.navigate("StartScreen");
   };
 
   return (
