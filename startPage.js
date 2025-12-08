@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     alignSelf: 'flex-end',
-    backgroundColor: '#004E6C', // TUD primary blue
+    backgroundColor: '#004E6C',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 4,
