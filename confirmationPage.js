@@ -14,48 +14,49 @@ export default function ConfirmationScreen() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
 
-  const handleConfirm = () => {
-    // later you can send this to Firebase or navigate
-    console.log('Email:', email);
-    console.log('Phone:', phone);
-  };
-
   return (
     <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
+      <View style={styles.topBar}>
+        <Text style={styles.topBarText}>Confirm Booking</Text>
+      </View>
 
-          {/* Email input */}
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
+      <View style={styles.card}>
+        <View style={styles.logoBox}>
+          <Text style={styles.logoText}>TUD LOGO</Text>
+        </View>
 
-          {/* Phone input */}
-          <TextInput
-            style={styles.input}
-            placeholder="Enter phone number"
-            value={phone}
-            onChangeText={setPhone}
-            keyboardType="phone-pad"
-          />
+        <TextInput
+          placeholder="Enter your email"
+          placeholderTextColor="#777"
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+        />
 
-          {/* Info text */}
-          <Text style={styles.infoText}>
-            You will receive a confirmation email and text message.
-          </Text>
+        <TextInput
+          placeholder="Enter phone number"
+          placeholderTextColor="#777"
+          keyboardType="phone-pad"
+          style={styles.input}
+          value={phone}
+          onChangeText={setPhone}
+        />
 
-          {/* Button (optional) */}
-          <TouchableOpacity style={styles.button} onPress={handleConfirm}>
-            <Text style={styles.buttonText}>Confirm Booking</Text>
-          </TouchableOpacity>
-      </KeyboardAvoidingView>
+        <Text style={styles.infoText}>
+          You will receive a confirmation email and text message.
+        </Text>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("SuccessScreen")}
+        >
+          <Text style={styles.buttonText}>Confirm</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.backText}>Back</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -63,54 +64,62 @@ export default function ConfirmationScreen() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
   },
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
+  topBar: {
+    padding: 16,
+    backgroundColor: '#00A9B8',
+  },
+  topBarText: {
+    color: '#FFFFFF',
+    fontWeight: '600',
+    fontSize: 18,
   },
   card: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: '#000',
-    padding: 20,
+    padding: 24,
   },
   logoBox: {
     width: 100,
     height: 80,
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#212121',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 40,
   },
   logoText: {
-    fontSize: 12,
+    color: '#212121',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 3,
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    marginBottom: 16,
+    borderColor: '#212121',
+    padding: 10,
+    borderRadius: 4,
+    marginBottom: 18,
+    color: '#212121',
   },
   infoText: {
-    fontSize: 12,
-    marginTop: 4,
-    marginBottom: 24,
+    fontSize: 14,
+    color: '#212121',
+    marginBottom: 20,
   },
   button: {
-    marginTop: 'auto',
-    alignSelf: 'flex-end',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    borderColor: '#000',
+    backgroundColor: '#004E6C',
+    paddingVertical: 12,
+    borderRadius: 4,
+    marginBottom: 20,
   },
   buttonText: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  backText: {
+    color: '#004E6C',
+    textAlign: 'center',
+    marginTop: 10,
     fontSize: 14,
   },
 });

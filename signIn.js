@@ -14,119 +14,103 @@ export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-import { auth } from '../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-
+  const handleSignIn = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        navigation.navigate("StartScreen");
+      })
+      .catch(error => alert(error.message));
   };
 
-  return ( 
+  return (
     <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
-        <View style={styles.card}>
-          
-          {/* Logo box */}
-          <View style={styles.logoBox}>
-            <Text style={styles.logoText}>TUD LOGO</Text>
-          </View>
+      <View style={styles.topBar}>
+        <Text style={styles.topBarText}>TUD LOGO</Text>
+      </View>
 
-          <Text style={styles.title}>Sign In</Text>
+      <View style={styles.card}>
+        <Text style={styles.title}>Sign In</Text>
 
-          {/* Email input */}
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-            keyboardType="email-address"
-          />
+        <TextInput
+          placeholder="Enter student email"
+          placeholderTextColor="#777"
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+        />
 
-          {/* Password input */}
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
+        <TextInput
+          placeholder="Enter password"
+          placeholderTextColor="#777"
+          secureTextEntry
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+        />
 
-          {/* Sign-in button */}
-          <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-            <Text style={styles.buttonText}>Sign In</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
 
-          {/* Optional register text */}
-          <Text style={styles.smallText}>
-            Don’t have an account? Register
-          </Text>
-
-        </View>
-      </KeyboardAvoidingView>
+        <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
+          <Text style={styles.linkText}>Don't have an account? Register</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
-
+}
 
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
   },
-  container: {
-    flex: 1,
+  topBar: {
     padding: 16,
+    backgroundColor: '#00A9B8',
+  },
+  topBarText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
   },
   card: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: '#000',
-    padding: 20,
-  },
-  logoBox: {
-    width: 100,
-    height: 80,
-    borderWidth: 1,
-    borderColor: '#000',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 40,
-  },
-  logoText: {
-    fontSize: 12,
+    padding: 24,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
+    color: '#212121',
+    marginBottom: 32,
     textAlign: 'center',
-    marginBottom: 30,
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 3,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    marginBottom: 16,
+    borderColor: '#212121',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+    marginBottom: 20,
+    color: '#212121',
   },
   button: {
-    alignSelf: 'center',
-    marginTop: 15,
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderWidth: 1,
-    borderColor: '#000',
+    backgroundColor: '#004E6C',
+    paddingVertical: 12,
+    borderRadius: 4,
+    marginTop: 10,
+    marginBottom: 20,
   },
   buttonText: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  smallText: {
-    marginTop: 20,
-    fontSize: 12,
     textAlign: 'center',
+    color: '#FFFFFF',
+    fontSize: 16,
   },
+  linkText: {
+    textAlign: 'center',
+    color: '#004E6C',
+    marginTop: 10,
+    fontSize: 14,
+  }
 });
 
