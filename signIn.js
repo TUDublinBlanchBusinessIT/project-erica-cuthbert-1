@@ -19,7 +19,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 
   };
 
-  return (
+  return ( 
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView
         style={styles.container}
@@ -67,7 +67,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-}
+
 
 const styles = StyleSheet.create({
   safe: {

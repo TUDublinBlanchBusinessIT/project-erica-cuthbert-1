@@ -19,157 +19,137 @@ const campuses = [
   { label: 'Blanchardstown Campus', value: 'blanch' },
 ];
 
-const App = () => {
+export default function StartScreen({ navigation })  {
   const [campus, setCampus] = useState('');
   const [podType, setPodType] = useState('single'); 
   const [dateTime, setDateTime] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
   const [duration, setDuration] = useState(1); 
 
-  const onChangeDateTime = (event, selectedDate) => {
-    setShowPicker(false);
-    if (selectedDate) setDateTime(selectedDate);
-  };
-
-  const formattedDate = dateTime.toLocaleDateString();
-  const formattedTime = dateTime.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-
-  return (
+ return (
     <SafeAreaView style={styles.safe}>
-      <StatusBar barStyle="dark-content" />
-      <View style={styles.container}>
-        {/* Top bar like “Account | Home” */}
-        <View style={styles.topBar}>
-          <Text style={styles.topBarText}>Account</Text>
-          <Text style={[styles.topBarText, styles.topBarRight]}>Home</Text>
-        </View>
+      <View style={styles.topBar}>
+        <Text style={styles.topBarText}>Account</Text>
+        <Text style={[styles.topBarText, styles.rightAlign]}>Home</Text>
+      </View>
 
-        {/* Main content */}
-        <View style={styles.card}>
-          {/* Campus picker */}
-          <Text style={styles.label}>Campus</Text>
-          <View style={styles.pickerWrapper}>
-            <Picker
-              selectedValue={campus}
-              onValueChange={(value) => setCampus(value)}
-            >
-              {campuses.map((c) => (
-                <Picker.Item key={c.value || 'none'} label={c.label} value={c.value} />
-              ))}
-            </Picker>
-          </View>
+      <View style={styles.card}>
 
-          {/* Radio buttons for pod type */}
-          <View style={styles.radioGroup}>
-            <TouchableOpacity
-              style={styles.radioRow}
-              onPress={() => setPodType('single')}
-            >
-              <View style={styles.radioOuter}>
-                {podType === 'single' && <View style={styles.radioInner} />}
-              </View>
-              <Text style={styles.radioLabel}>Single Pod</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.radioRow}
-              onPress={() => setPodType('group')}
-            >
-              <View style={styles.radioOuter}>
-                {podType === 'group' && <View style={styles.radioInner} />}
-              </View>
-              <Text style={styles.radioLabel}>Group Pod</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Date & time picker */}
-          <Text style={styles.label}>Date & Time</Text>
-          <TouchableOpacity
-            style={styles.dateButton}
-            onPress={() => setShowPicker(true)}
+        {/* Campus Dropdown */}
+        <Text style={styles.label}>Campus</Text>
+        <View style={styles.pickerWrapper}>
+          <Picker
+            selectedValue={campus}
+            onValueChange={(value) => setCampus(value)}
+            style={{ color: '#212121' }}
           >
-            <Text style={styles.dateText}>
-              {formattedDate}   {formattedTime}
-            </Text>
+            {campuses.map((c) => (
+              <Picker.Item key={c.value} label={c.label} value={c.value} />
+            ))}
+          </Picker>
+        </View>
+
+        {/* Pod Selection */}
+        <Text style={styles.label}>Pod Type</Text>
+        <View style={styles.radioGroup}>
+          <TouchableOpacity onPress={() => setPodType('single')} style={styles.radioRow}>
+            <View style={styles.radioOuter}>
+              {podType === 'single' && <View style={styles.radioInner} />}
+            </View>
+            <Text style={styles.radioLabel}>Single Pod</Text>
           </TouchableOpacity>
 
-          {showPicker && (
-            <DateTimePicker
-              value={dateTime}
-              mode="datetime"
-              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              onChange={onChangeDateTime}
-              minimumDate={new Date()}
-            />
-          )}
-
-          {/* Duration slider */}
-          <Text style={styles.label}>How many hours</Text>
-          <View style={styles.sliderRow}>
-            <Slider
-              style={styles.slider}
-              minimumValue={1}
-              maximumValue={5}
-              step={1}
-              value={duration}
-              onValueChange={(value) => setDuration(value)}
-            />
-            <Text style={styles.durationText}>{duration} h</Text>
-          </View>
-
-          {/* Next button – doesn’t navigate yet, just placeholder */}
-          <TouchableOpacity style={styles.nextButton}>
-            <Text style={styles.nextText}>Next &gt;</Text>
+          <TouchableOpacity onPress={() => setPodType('group')} style={styles.radioRow}>
+            <View style={styles.radioOuter}>
+              {podType === 'group' && <View style={styles.radioInner} />}
+            </View>
+            <Text style={styles.radioLabel}>Group Pod</Text>
           </TouchableOpacity>
         </View>
+
+        {/* Date & Time */}
+        <Text style={styles.label}>Date & Time</Text>
+        <TouchableOpacity
+          style={styles.dateButton}
+          onPress={() => setShowPicker(true)}
+        >
+          <Text style={styles.dateText}>
+            {dateTime.toLocaleDateString()}   {dateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </Text>
+        </TouchableOpacity>
+
+        {showPicker && (
+          <DateTimePicker
+            value={dateTime}
+            mode="datetime"
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            onChange={(event, selected) => {
+              setShowPicker(false);
+              if (selected) setDateTime(selected);
+            }}
+          />
+        )}
+
+        {/* Duration Slider */}
+        <Text style={styles.label}>How many hours?</Text>
+        <View style={styles.sliderContainer}>
+          <Slider
+            minimumValue={1}
+            maximumValue={5}
+            step={1}
+            value={duration}
+            onValueChange={(v) => setDuration(v)}
+          />
+          <Text style={styles.durationText}>{duration} h</Text>
+        </View>
+
+        {/* Next Button */}
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={() => navigation.navigate('ConfirmationScreen')}
+        >
+          <Text style={styles.nextText}>Next</Text>
+        </TouchableOpacity>
+
       </View>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#fff' },
-  container: {
+  safe: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF', // TUD white
   },
   topBar: {
     flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: '#000',
-    padding: 8,
-    marginBottom: 12,
+    backgroundColor: '#00A9B8', // TUD accent cyan
+    padding: 12,
   },
   topBarText: {
-    fontSize: 14,
+    color: '#FFFFFF',
+    fontSize: 16,
   },
-  topBarRight: {
+  rightAlign: {
     marginLeft: 'auto',
   },
   card: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: '#000',
-    padding: 16,
+    padding: 20,
   },
   label: {
-    fontSize: 14,
+    color: '#212121', // TUD dark grey
+    marginTop: 12,
     marginBottom: 4,
-    marginTop: 8,
+    fontSize: 15,
   },
   pickerWrapper: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#212121',
     borderRadius: 4,
-    marginBottom: 12,
   },
   radioGroup: {
-    marginVertical: 8,
+    marginTop: 10,
   },
   radioRow: {
     flexDirection: 'row',
@@ -180,8 +160,8 @@ const styles = StyleSheet.create({
     width: 18,
     height: 18,
     borderRadius: 9,
-    borderWidth: 1,
-    borderColor: '#000',
+    borderWidth: 2,
+    borderColor: '#212121',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 8,
@@ -190,42 +170,40 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
+    backgroundColor: '#004E6C', // TUD primary blue
   },
   radioLabel: {
+    color: '#212121',
     fontSize: 14,
   },
   dateButton: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#212121',
+    padding: 10,
     borderRadius: 4,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginBottom: 12,
-    marginTop: 4,
+    marginVertical: 10,
   },
   dateText: {
-    fontSize: 14,
+    color: '#212121',
   },
-  sliderRow: {
+  sliderContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  slider: {
-    flex: 1,
-  },
   durationText: {
-    width: 40,
-    textAlign: 'center',
+    marginLeft: 12,
+    color: '#212121',
   },
   nextButton: {
     alignSelf: 'flex-end',
-    marginTop: 24,
+    backgroundColor: '#004E6C', // TUD primary blue
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 4,
+    marginTop: 30,
   },
   nextText: {
-    fontSize: 16,
+    color: '#FFFFFF',
+    fontSize: 15,
   },
 });
-
-export default App;
-
-/* Note to self- laptop cannot download npx or npv */
