@@ -18,9 +18,12 @@ export default function ConfirmationScreen({ navigation }) {
         <Text style={styles.topBarText}>Confirm Booking</Text>
       </View>
 
-      <View style={styles.card}>
-        <View style={styles.logoBox}>
-          <Text style={styles.logoText}>TUD LOGO</Text>
+      <View style={styles.logoBox}>
+          <Image
+            source={require('./assets/TUD-Logo-MA.png')}
+            style={styles.logoImage}
+            resizeMode="contain"
+          />
         </View>
 
         <TextInput
@@ -90,6 +93,12 @@ const styles = StyleSheet.create({
   logoText: {
     color: '#212121',
   },
+
+  logoImage: {
+    width: '100%',
+    height: '100%',
+  },
+
   input: {
     borderWidth: 1,
     borderColor: '#212121',
