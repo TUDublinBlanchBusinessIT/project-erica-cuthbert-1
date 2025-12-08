@@ -1,3 +1,5 @@
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "YOUR_KEY",
@@ -6,18 +8,6 @@ const firebaseConfig = {
   storageBucket: "project-19d8d.appspot.com",
   messagingSenderId: "1234",
   appId: "1:1234:web:abcd",
-};
-
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_APP.firebaseapp.com",
-  projectId: "YOUR_APP",
-  storageBucket: "YOUR_APP.appspot.com",
-  messagingSenderId: "1234",
-  appId: "1:1234:web:abcd"
 };
 
 const app = initializeApp(firebaseConfig);
