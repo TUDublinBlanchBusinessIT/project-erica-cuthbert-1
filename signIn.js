@@ -6,33 +6,25 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 
-export default function SignInScreen({ navigation }) {
+export default function SignIn({ navigation }) {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSignIn = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigation.navigate("StartScreen");
-      })
-      .catch(error => alert(error.message));
-  };
+  const [phone, setPhone] = useState('');
 
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.topBar}>
-        <Text style={styles.topBarText}>TUD LOGO</Text>
+        <Text style={styles.topBarText}>Confirm Booking</Text>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.title}>Sign In</Text>
+        <View style={styles.logoBox}>
+          <Text style={styles.logoText}>TUD LOGO</Text>
+        </View>
 
         <TextInput
-          placeholder="Enter student email"
+          placeholder="Enter your email"
           placeholderTextColor="#777"
           style={styles.input}
           value={email}
@@ -40,20 +32,27 @@ export default function SignInScreen({ navigation }) {
         />
 
         <TextInput
-          placeholder="Enter password"
+          placeholder="Enter phone number"
           placeholderTextColor="#777"
-          secureTextEntry
+          keyboardType="phone-pad"
           style={styles.input}
-          value={password}
-          onChangeText={setPassword}
+          value={phone}
+          onChangeText={setPhone}
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-          <Text style={styles.buttonText}>Sign In</Text>
+        <Text style={styles.infoText}>
+          You will receive a confirmation email and text message.
+        </Text>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("StartScreen")}
+        >
+          <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
-          <Text style={styles.linkText}>Don't have an account? Register</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.backText}>Back</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -71,46 +70,55 @@ const styles = StyleSheet.create({
   },
   topBarText: {
     color: '#FFFFFF',
-    fontSize: 18,
     fontWeight: '600',
+    fontSize: 18,
   },
   card: {
     flex: 1,
     padding: 24,
   },
-  title: {
-    fontSize: 24,
+  logoBox: {
+    width: 100,
+    height: 80,
+    borderWidth: 1,
+    borderColor: '#212121',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  logoText: {
     color: '#212121',
-    marginBottom: 32,
-    textAlign: 'center',
-    fontWeight: '600',
   },
   input: {
     borderWidth: 1,
     borderColor: '#212121',
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+    padding: 10,
     borderRadius: 4,
-    marginBottom: 20,
+    marginBottom: 18,
     color: '#212121',
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#212121',
+    marginBottom: 20,
   },
   button: {
     backgroundColor: '#004E6C',
     paddingVertical: 12,
     borderRadius: 4,
-    marginTop: 10,
     marginBottom: 20,
   },
   buttonText: {
-    textAlign: 'center',
     color: '#FFFFFF',
+    textAlign: 'center',
     fontSize: 16,
   },
-  linkText: {
-    textAlign: 'center',
+  backText: {
     color: '#004E6C',
+    textAlign: 'center',
     marginTop: 10,
     fontSize: 14,
-  }
+  },
 });
 

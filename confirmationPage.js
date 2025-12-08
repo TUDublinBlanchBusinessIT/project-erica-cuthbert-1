@@ -6,11 +6,9 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 
-export default function ConfirmationScreen() {
+export default function ConfirmationScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
 
@@ -48,7 +46,7 @@ export default function ConfirmationScreen() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("SuccessScreen")}
+          onPress={() => navigation.navigate("StartScreen")}
         >
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
