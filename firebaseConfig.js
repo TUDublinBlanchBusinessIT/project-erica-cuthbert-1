@@ -13,14 +13,3 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-
-const handleSignIn = () => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then(userCredential => {
-      console.log("Logged in!", userCredential.user.email);
-    })
-    .catch(error => {
-      alert(error.message);
-    });
-};
-

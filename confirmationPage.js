@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./firebaseConfig";
 import {
   View,
   Text,
@@ -6,11 +8,21 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
+  Button,
+  Alert,
 } from 'react-native';
 
 export default function ConfirmationScreen({ navigation }) {
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+
+  const register = () =>
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        Alert.alert("Success", "Account created!");
+        navigation.navigate("StartScreen");
+      })
+      .catch((e) => Alert.alert("Error", e.message));
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -18,7 +30,9 @@ export default function ConfirmationScreen({ navigation }) {
         <Text style={styles.topBarText}>Confirm Booking</Text>
       </View>
 
-      <View style={styles.logoBox}>
+      <View style={styles.card}>
+
+        <View style={styles.logoBox}>
           <Image
             source={require('./assets/TUD-Logo-MA.png')}
             style={styles.logoImage}
@@ -57,8 +71,10 @@ export default function ConfirmationScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.backText}>Back</Text>
         </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+
+      </View> 
+
+    </SafeAreaView> 
   );
 }
 
@@ -90,15 +106,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 40,
   },
-  logoText: {
-    color: '#212121',
-  },
-
   logoImage: {
     width: '100%',
     height: '100%',
   },
-
   input: {
     borderWidth: 1,
     borderColor: '#212121',
