@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import {
   View,
@@ -8,8 +7,8 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  Button,
-  Alert,
+  Image,
+  Alert
 } from 'react-native';
 
 export default function ConfirmationScreen({ navigation }) {
@@ -17,7 +16,7 @@ export default function ConfirmationScreen({ navigation }) {
   const [password, setPassword] = useState('');
 
   const register = () =>
-    createUserWithEmailAndPassword(auth, email, password)
+    auth.createUserWithEmailAndPassword(email, password)
       .then(() => {
         Alert.alert("Success", "Account created!");
         navigation.navigate("StartScreen");
@@ -49,12 +48,12 @@ export default function ConfirmationScreen({ navigation }) {
         />
 
         <TextInput
-          placeholder="Enter phone number"
+          placeholder="Enter password"
           placeholderTextColor="#777"
-          keyboardType="phone-pad"
+          secureTextEntry
           style={styles.input}
-          value={phone}
-          onChangeText={setPhone}
+          value={password}
+          onChangeText={setPassword}
         />
 
         <Text style={styles.infoText}>
@@ -63,7 +62,7 @@ export default function ConfirmationScreen({ navigation }) {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("StartScreen")}
+          onPress={register}
         >
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
@@ -72,9 +71,8 @@ export default function ConfirmationScreen({ navigation }) {
           <Text style={styles.backText}>Back</Text>
         </TouchableOpacity>
 
-      </View> 
-
-    </SafeAreaView> 
+      </View>
+    </SafeAreaView>
   );
 }
 
